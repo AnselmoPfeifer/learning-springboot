@@ -1,0 +1,70 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.194.0/containers/docker-from-docker-compose
+{
+	"name": "springboot",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspace",
+	"shutdownAction": "stopCompose",
+	// Use this environment variable if you need to bind mount your local source code into a new container.
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+	"features": {
+        "ghcr.io/devcontainers/features/java:1": {
+   //         "version": "0.17",
+           "installMaven": "true",
+           "installGradle": "true",
+           "mavenVersion": "3.8.6"
+       }
+   },
+	// Set *default* container specific settings.json values on container create.
+	"customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "zsh",
+                "files.autoSave": "afterDelay",
+                "files.autoSaveDelay": 1000,
+                "explorer.compactFolders": false,
+                "java.configuration.runtimes": [
+                    {
+                        "name": "JavaSE-17",
+                        "path": "/usr/lib/jvm/msopenjdk-current"
+                    }
+                ],
+                    
+                "github.copilot.enable": {
+                    "*": true,
+                    "plaintext": true,
+                    "markdown": true,
+                    "scminput": true
+                }
+            },
+            
+            "extensions": [
+                "vscjava.vscode-java-pack",
+                "vscjava.vscode-spring-initializr",
+                "vmware.vscode-spring-boot",
+                "vscjava.vscode-spring-boot-dashboard",
+                "redhat.fabric8-analytics",
+                "ms-azuretools.vscode-docker",
+                "redhat.vscode-yaml",
+                "eamodio.gitlens",
+                "esbenp.prettier-vscode",
+                "humao.rest-client"
+            ]
+        }
+    },
+
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": []',
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "docker --version",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	
+    "remoteUser": "root"
+
+}

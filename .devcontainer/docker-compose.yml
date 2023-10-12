@@ -1,0 +1,42 @@
+# https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose
+
+version: '3'
+
+services:
+  app:
+    # Use this pre-built image in the container registry, unless we want to manually build a new image
+    image: mcr.microsoft.com/devcontainers/java:0-17
+    
+    # Uncomment the next line to use a non-root user for all processes.
+    user: "root"
+    privileged: true
+    working_dir: /workspace
+    volumes:
+      # Preserve your zsh command history between sessions
+      - app-zshhistory:/commandhistory
+      # Forwards the local Docker socket to the container.  This lets us run docker in docker.
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Mounts the project folder to '/workspace'. The target path inside the container
+      # should match what your application expects. In this case, the compose file is
+      # in a sub-folder, so you will mount '..'. You would then reference this path as the
+      # 'workspaceFolder' in '.devcontainer/devcontainer.json' so VS Code starts here.
+      - ..:/workspace:cached
+      # Use the Ansible collections installed on the host machine.
+      - $HOME/.aws:/root/.aws
+      - $HOME/.ssh:/root/.ssh
+      - $HOME/.m2:/root/.m2
+      - $HOME/.gitconfig:/root/.gitconfig
+      - $HOME/.git-credential-cache:/root/.git-credential-cache
+      - $HOME/.git-credentials:/root/.git-credentials
+      - $HOME/.git-templates:/root/.git-templates
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+    environment:
+      - JAVA_HOME="/usr/lib/jvm/msopenjdk-current"
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+volumes:
+  app-zshhistory:
